@@ -3,7 +3,8 @@ html, body {
   height: 100%; }
 
 .container {
-  border: 1px solid blue; }
+  width: 100%;
+  background: #0B3EC6; }
 
 .load-wrapper {
   position: fixed;
@@ -65,7 +66,6 @@ html, body {
 
 /* Main Contents */
 .loaded #main {
-  border: 1px solid red;
   visibility: visible;
   opacity: 1;
   width: 100%;
@@ -80,18 +80,6 @@ html, body {
   left: 15%;
   top: 30%;
   font-size: 6vw; }
-  .slideshow > div:nth-child(1) {
-    opacity: 1;
-    white-space: nowrap;
-    border: 1px solid red; }
-  .slideshow > div:nth-child(2) {
-    opacity: 1;
-    white-space: nowrap;
-    border: 1px solid red; }
-  .slideshow > div:nth-child(3) {
-    opacity: 1;
-    white-space: nowrap;
-    border: 1px solid red; }
   .slideshow h2.__title {
     overflow: hidden;
     display: flex;
@@ -149,7 +137,7 @@ html, body {
     width: 100%;
     height: 6px;
     margin: -3px 0 0 0;
-    background: #1c9ccd;
+    background: #0B3EC6;
     position: absolute;
     left: 0;
     top: 50%;

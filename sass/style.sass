@@ -8,7 +8,7 @@ $font-stack: Roboto, sans-serif
 
 $background-color: #f1f1f1
 $primary-color: #72d0f4
-$secondary-color: #1c9ccd
+$secondary-color: #0B3EC6
 $tertiary-color: #313131
 $green : #cde7d3
 
@@ -29,7 +29,9 @@ $green : #cde7d3
 
 //init
 .container
-  border: 1px solid blue
+  width: 100%
+  //height: 100%
+  background: $secondary-color
 
   //
 .load-wrapper
@@ -94,7 +96,6 @@ $green : #cde7d3
 
 /* Main Contents */
 .loaded #main
-  border: 1px solid red
   visibility: visible
   opacity: 1
   width: 100%
@@ -111,12 +112,11 @@ $green : #cde7d3
   top: 30%
   font-size: 6vw
 
-  @for $i from 1 through 3
-    //$top: percentage(2.5 / $i)
-    &>div:nth-child(#{$i})
-      opacity: 1
-      white-space: nowrap
-      border: 1px solid red
+
+    // &>div:nth-child(#{$i})
+    //   opacity: 1
+    //   white-space: nowrap
+    //   border: 1px solid red
 
 
   h2.__title
