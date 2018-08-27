@@ -1,39 +1,27 @@
 // main
-(function() {
+(function(window, document, undefined) {
+    'use strict';
+
+    /**
+     * Selectors
+     */
+    var doc = document,
+        container = doc.getElementById('container'),
+        loadingBar = container.querySelector('.bar');
+
+    /**
+     * Methods
+     */
     var _init = function() {
         console.log('loading')
-
-
-        //1. 로딩, noscroll 2.로딩이 끝나면 load-wrapper scale -up 3. 로딩 텍스트
-
+        var animationEvent = whichAnimationEvent();
         window.addEventListener('scroll', noscroll);
-
-        var container = document.getElementById('container'),
-            bar = container.querySelector('.bar'),
-            helloPath = container.querySelector('.hello-path'),
-            animationEvent = whichAnimationEvent();
-
         container.classList.add("loading");
-        bar.addEventListener(animationEvent, animationEndCallback);
+        loadingBar.addEventListener(animationEvent, animationEndCallback);
 
 
         //load main element when loading finishes
-        function animationEndCallback(event) {
-            bar.removeEventListener(animationEvent, animationEndCallback);
-            console.log('complete!')
-            container.classList.remove("loading");
-            container.classList.add("loaded");
-            //clearInterval( interval );
-
-            window.removeEventListener('scroll', noscroll);
-            // setTimeout(function() {
-            //     slideText()
-            // }, 1300)
-
-
-        }
-
-        //svgAnimation(helloPath);
+        animationEndCallback(loadingBar);
 
     }
     //end _init
@@ -41,6 +29,18 @@
     //no scroll
     function noscroll() {
         window.scrollTo(0, 0);
+    }
+
+    //callback after the end of the animation
+    function animationEndCallback(event) {
+        loadingBar.removeEventListener(animationEvent, animationEndCallback);
+        console.log('animation loaded!')
+        container.classList.remove("loading");
+        container.classList.add("loaded");
+        //clearInterval( interval );
+
+        window.removeEventListener('scroll', noscroll);
+
     }
 
     //detect the end of animations
@@ -62,41 +62,81 @@
         }
     }
 
-    function svgAnimation(path){
-        var svgDrawing = anime({
-          targets: path,
-          strokeDashoffset: [anime.setDashoffset, 0],
-          easing: 'easeInOutSine',
-          duration: 700,
-          delay: function(el, i) { return i * 700 },
-          direction: 'forwards',
-          loop: false,
-        	complete: function(anim) {
-            $('.container').addClass('completed');
-        		alert('complete!')
+    function textAnimation() {
+        var svgPath = doc.querySelector('.svg-path'),
+        slide = doc.querySelector('.slide'),
+        letters = slide.querySelector('.letters'),
+        line = myName.querySelector('.line'),
+        letterList = myName.querySelectorAll('.t'),
+        letters = [];
+        forEach(letterList, function (index, value) {
+            letters.push(value)
+        });
+
+        var basicTimeline = anime.timeline();
+        basicTimeline
+        .add({
+            targets: svgPath,
+            strokeDashoffset: [anime.setDashoffset, 0],
+            easing: 'easeInOutSine',
+            duration: 1000,
+            delay: function(el, i) { return i * 1000 },
+            direction: 'forwards',
+            loop: false,
+              complete: function(anim) {
+              $('.container').addClass('completed');
+                  //alert('complete!')
+            }
+        })
+        .add({
+          targets: line,
+          //translateX: 250,
+          duration: 200,
+          easing: 'easeInOutCubic',
+          scaleX: [0,1],
+          complete: function() {
+              line.style.WebkitTransformOrigin = line.style.transformOrigin = '100% 50%';
+              anime({
+                  targets: line,
+                  duration: 200,
+                  easing: 'easeInOutCubic',
+                  scaleX: [1,0],
+                  complete: function() {
+                      anime({
+                          targets: letters,
+                          translateX: 250,
+                          opacity: 1,
+                          direction: 'alternate',
+                          loop: false,
+                          delay: function(el, i, l) {
+                              return i * 100;
+                          }
+                      });
+                  }
+              });
           }
         });
-    }
+    };
 
-    //show TextFx
-    // function slideText() {
-    //     //for a number of slide
-    //     var slideshow = document.querySelector(".slideshow");
-    //     var slides = [].slice.call(slideshow.querySelectorAll('.slide'));
-    //     var counter = 0;
-    //     slides.forEach(function(el, index) {
-    //         //el.classList.remove('slide--current');
-    //         setTimeout(function() {
-    //             console.log(counter)
-    //             counter++;
-    //             slides[counter - 1].style.opacity = 1;
-    //             //this.slides[counter-1].classList.add('slide--current');
-    //             var letters = new TextFx(slides[counter - 1], 'fx1');
-    //
-    //         }, index * 1200);
-    //     })
+
+    var forEachReverse = function (array, callback, scope) {
+      for (var i = array.length; i--;) {
+        callback.call(scope, i, array[i]); // passes back stuff we need
+      }
+    };
+
+
+
+
+    /**
+     * Events/APIs/init
+     */
+
+    _init();
+    //var custom = typeof effect === 'string' && effect === 'fx17' && direction === 'out';
+    //if( custom ) {}
+    // if (!this.classList.contains('active')) {
+    //     this.classList.add('active');
     // }
 
-    //_init();
-
-})();
+})(window, document);
