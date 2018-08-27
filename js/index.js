@@ -10,6 +10,7 @@
 
         var container = document.getElementById('container'),
             bar = container.querySelector('.bar'),
+            helloPath = container.querySelector('.hello-path'),
             animationEvent = whichAnimationEvent();
 
         container.classList.add("loading");
@@ -25,12 +26,14 @@
             //clearInterval( interval );
 
             window.removeEventListener('scroll', noscroll);
-            setTimeout(function() {
-                slideText()
-            }, 1300)
+            // setTimeout(function() {
+            //     slideText()
+            // }, 1300)
 
 
         }
+
+        //svgAnimation(helloPath);
 
     }
     //end _init
@@ -59,24 +62,40 @@
         }
     }
 
-    //show TextFx
-    function slideText() {
-        //for a number of slide
-        var slideshow = document.querySelector(".slideshow");
-        var slides = [].slice.call(slideshow.querySelectorAll('.slide'));
-        var counter = 0;
-        slides.forEach(function(el, index) {
-            //el.classList.remove('slide--current');
-            setTimeout(function() {
-                console.log(counter)
-                counter++;
-                slides[counter - 1].style.opacity = 1;
-                //this.slides[counter-1].classList.add('slide--current');
-                var letters = new TextFx(slides[counter - 1], 'fx1');
-
-            }, index * 1200);
-        })
+    function svgAnimation(path){
+        var svgDrawing = anime({
+          targets: path,
+          strokeDashoffset: [anime.setDashoffset, 0],
+          easing: 'easeInOutSine',
+          duration: 700,
+          delay: function(el, i) { return i * 700 },
+          direction: 'forwards',
+          loop: false,
+        	complete: function(anim) {
+            $('.container').addClass('completed');
+        		alert('complete!')
+          }
+        });
     }
+
+    //show TextFx
+    // function slideText() {
+    //     //for a number of slide
+    //     var slideshow = document.querySelector(".slideshow");
+    //     var slides = [].slice.call(slideshow.querySelectorAll('.slide'));
+    //     var counter = 0;
+    //     slides.forEach(function(el, index) {
+    //         //el.classList.remove('slide--current');
+    //         setTimeout(function() {
+    //             console.log(counter)
+    //             counter++;
+    //             slides[counter - 1].style.opacity = 1;
+    //             //this.slides[counter-1].classList.add('slide--current');
+    //             var letters = new TextFx(slides[counter - 1], 'fx1');
+    //
+    //         }, index * 1200);
+    //     })
+    // }
 
     //_init();
 

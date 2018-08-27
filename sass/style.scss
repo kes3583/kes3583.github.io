@@ -1,0 +1,160 @@
+@import url('https://fonts.googleapis.com/css?family=Monoton');
+body,
+html {
+    width: 100%;
+    height: 100%;
+}
+// variable
+$font-roboto: Roboto, sans-serif;
+$font-monoton: Monoton, sans-serif;
+
+$background-color: #f1f1f1;
+$primary-color: #72d0f4;
+$secondary-color: #0B3EC6;
+$tertiary-color: #313131;
+
+//@mixin
+@mixin transform($option) {
+    -webkit-transform: $option;
+    -moz-transform: $option;
+    -ms-transform: $option;
+    transform: $option;
+}
+// interporation
+%box {
+    width: 250px;
+    height: 0;
+    margin: 0 auto;
+    display: block;
+}
+//init
+#container {
+    //width: 100%;
+    //height: 100%
+    background: #fff;
+    //
+}
+
+.load-wrapper {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: $secondary-color;
+    z-index: 1;
+}
+
+.bar {
+    width: 250px;
+    height: 3px;
+    background: #3E67D6;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    @include transform(translate(-50%));
+}
+/* Animations */
+/* Initial animation of progress bar  */
+.loading .bar::after {
+    content: "";
+    position: absolute;
+    width: 10px;
+    height: 100%;
+    background: #fff;
+    z-index: 0;
+    left: 0;
+    margin: 0;
+    top: 0;
+    animation: loading 4s linear 0.5s forwards;
+}
+@keyframes loading {
+    from {
+        width: 5%;
+        opacity: 1;
+    }
+
+    to {
+        width: 100%;
+    }
+}
+/* when loading finishes */
+.loaded .load-wrapper {
+    //display: none
+    animation: animLoadedHeader 0.5s cubic-bezier(0.7, 0, 0.3, 1) 0.5s forwards;
+}
+@keyframes animLoadedHeader {
+    to {
+        transform: translate3d(0, -100%, 0);
+    }
+}
+
+.loaded .bar {
+    opacity: 0;
+    transition: 0.5s ease;
+}
+/* Main elements */
+#main {
+    visibility: hidden;
+    opacity: 0;
+}
+/* Main Contents */
+.loaded #main {
+    visibility: visible;
+    opacity: 1;
+    transition: 1s ease;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    color: #313131;
+}
+
+.slideshow {
+    color: $tertiary-color;
+    position: absolute;
+    left: 15%;
+    top: 30%;
+    font-size: 6vw;
+
+    h2.__title {
+        overflow: hidden;
+        display: flex;
+        flex: none;
+        margin: 0;
+        padding: 0;
+    }
+}
+@mixin tobecenter {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+// svg--hello
+.page1 .svg-hello{
+    @include tobecenter;
+    width: 40%;
+    height: 40%;
+    svg{
+	    fill: none;
+        margin-top: -7px;
+        transform: rotate(-18deg);
+	    path{
+	        transition: fill 1s ease-in-out;
+		    fill: transparent;
+            stroke: #c7edf2;
+            stroke-linejoin: round;
+		    stroke-width: 7px;
+        }
+    }
+}
+.page1 .name{
+    @include tobecenter;
+    margin-top: 7px;
+    font: {
+        size: 100px;
+        family: Monoton, sans-serif;
+        color: $secondary-color;
+    }
+}
