@@ -15,21 +15,17 @@ html {
   height: 100%;
   background: #0B3EC6;
   z-index: 1; }
-
-.bar {
-  width: 250px;
-  height: 3px;
-  background: #3E67D6;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  -webkit-transform: translate(-50%);
-  -moz-transform: translate(-50%);
-  -ms-transform: translate(-50%);
-  transform: translate(-50%); }
+  .load-wrapper .bar {
+    width: 250px;
+    height: 3px;
+    background: #3E67D6;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%); }
 
 /* Animations */
-/* Initial animation of progress bar  */
+/* Initial animation of loading bar  */
 .loading .bar::after {
   content: "";
   position: absolute;
@@ -40,7 +36,7 @@ html {
   left: 0;
   margin: 0;
   top: 0;
-  animation: loading 4s linear 0.5s forwards; }
+  animation: loading 2s linear 0.5s forwards; }
 
 @keyframes loading {
   from {
@@ -48,17 +44,23 @@ html {
     opacity: 1; }
   to {
     width: 100%; } }
-/* when loading finishes */
-.loaded .load-wrapper {
-  animation: animLoadedHeader 0.5s cubic-bezier(0.7, 0, 0.3, 1) 0.5s forwards; }
+.loading .bar {
+  position: absolute;
+  top: 50%;
+  left: 40%;
+  transform: scaleX(1);
+  animation: completed 0.5s linear 2.5s forwards; }
+
+@keyframes completed {
+  to {
+    transform: scaleX(0); } }
+.loading .load-wrapper {
+  animation: animLoadedHeader 0.5s cubic-bezier(0.7, 0, 0.3, 1) 3s forwards; }
 
 @keyframes animLoadedHeader {
   to {
     transform: translate3d(0, -100%, 0); } }
-.loaded .bar {
-  opacity: 0;
-  transition: 0.5s ease; }
-
+/** loading finishes */
 /* Main elements */
 #main {
   visibility: hidden;

@@ -7,42 +7,48 @@
      */
     var doc = document,
         container = doc.getElementById('container'),
-        loadingBar = container.querySelector('.bar');
+
+        animEndEventName = whichAnimationEvent();
 
     /**
      * Methods
      */
+
+     //load main element when loading finishes
     var _init = function() {
         console.log('loading')
-        var animationEvent = whichAnimationEvent();
+
+
+        //callback after the end of the animation
+        var animationEndCallback = function () {
+
+            console.log('animation completed!')
+            this.removeEventListener(animEndEventName, animationEndCallback);
+            console.log('call another function!')
+
+            //textAnimation();
+            test();
+        }
+
+
         window.addEventListener('scroll', noscroll);
         container.classList.add("loading");
-        loadingBar.addEventListener(animationEvent, animationEndCallback);
 
+        var loadWrapper = document.querySelector('loading');
+        loadWrapper.addEventListener(animEndEventName, animationEndCallback);
 
-        //load main element when loading finishes
-        animationEndCallback(loadingBar);
 
     }
     //end _init
+
+    function test(){
+        console.log('test')
+    }
 
     //no scroll
     function noscroll() {
         window.scrollTo(0, 0);
     }
-
-    //callback after the end of the animation
-    function animationEndCallback(event) {
-        loadingBar.removeEventListener(animationEvent, animationEndCallback);
-        console.log('animation loaded!')
-        container.classList.remove("loading");
-        container.classList.add("loaded");
-        //clearInterval( interval );
-
-        window.removeEventListener('scroll', noscroll);
-
-    }
-
     //detect the end of animations
     function whichAnimationEvent() {
         var t,
@@ -63,20 +69,29 @@
     }
 
     function textAnimation() {
-        var svgPath = doc.querySelector('.svg-path'),
-        slide = doc.querySelector('.slide'),
-        letters = slide.querySelector('.letters'),
-        line = myName.querySelector('.line'),
-        letterList = myName.querySelectorAll('.t'),
-        letters = [];
-        forEach(letterList, function (index, value) {
-            letters.push(value)
+        console.log('starts textAnimation')
+        container.classList.remove("loading");
+        container.classList.add("loaded");
+        window.removeEventListener('scroll', noscroll);
+
+        var pathHello = document.querySelector('.path-hello'),
+            slide = doc.querySelector('.slide'),
+            letters = slide.querySelector('h1.myname'),
+            line = letters.querySelector('.line'),
+            letterList = letters.querySelectorAll('.t'),
+            lettersArr = [];
+
+        forEachReverse(letterList, function (index, value) {
+            lettersArr.push(value)
         });
+
+        console.log('lettersArr', lettersArr)
+
 
         var basicTimeline = anime.timeline();
         basicTimeline
         .add({
-            targets: svgPath,
+            targets: pathHello,
             strokeDashoffset: [anime.setDashoffset, 0],
             easing: 'easeInOutSine',
             duration: 1000,
@@ -84,7 +99,7 @@
             direction: 'forwards',
             loop: false,
               complete: function(anim) {
-              $('.container').addClass('completed');
+              //$('.container').addClass('completed');
                   //alert('complete!')
             }
         })
@@ -120,6 +135,7 @@
 
 
     var forEachReverse = function (array, callback, scope) {
+        console.log('forEachReverse')
       for (var i = array.length; i--;) {
         callback.call(scope, i, array[i]); // passes back stuff we need
       }
