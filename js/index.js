@@ -7,49 +7,46 @@
      */
     var doc = document,
         container = doc.getElementById('container'),
-
-        animEndEventName = whichAnimationEvent();
+        loadWrapper = container.querySelector('.load-wrapper'),
+        loadingBar = loadWrapper.querySelector('.bar'),
+        animationEvent = whichAnimationEvent();
 
     /**
      * Methods
      */
 
-     //load main element when loading finishes
+    //load main element when loading finishes
     var _init = function() {
         console.log('loading')
 
-
-        //callback after the end of the animation
-        var animationEndCallback = function () {
-
-            console.log('animation completed!')
-            this.removeEventListener(animEndEventName, animationEndCallback);
-            console.log('call another function!')
-
-            //textAnimation();
-            test();
-        }
-
-
         window.addEventListener('scroll', noscroll);
-        container.classList.add("loading");
+        container.classList.add('loading');
 
-        var loadWrapper = document.querySelector('loading');
-        loadWrapper.addEventListener(animEndEventName, animationEndCallback);
+        //detect the end of animations
+        var loadWrapper = $('.load-wrapper');
+        loadWrapper.on(animationEvent, function(e) {
+            //console.log('detecting animationName!', e.originalEvent.animationName)
+            var animationName = e.originalEvent.animationName;
 
+            if (animationName === 'animLoadedHeader') {
+                //console.log(animationName,'animation has finished');
+                console.log('starts textAnimation');
+                container.classList.remove("loading");
+                container.classList.add("loaded");
+                window.removeEventListener('scroll', noscroll);
 
+                //textAnimation();
+            }
+        });
     }
     //end _init
-
-    function test(){
-        console.log('test')
-    }
 
     //no scroll
     function noscroll() {
         window.scrollTo(0, 0);
     }
-    //detect the end of animations
+
+    //animation end event
     function whichAnimationEvent() {
         var t,
             el = document.createElement("fakeelement");
@@ -68,77 +65,88 @@
         }
     }
 
-    function textAnimation() {
-        console.log('starts textAnimation')
-        container.classList.remove("loading");
-        container.classList.add("loaded");
-        window.removeEventListener('scroll', noscroll);
 
-        var pathHello = document.querySelector('.path-hello'),
+
+    function textAnimation() {
+        var pathHello = doc.querySelector('.path-hello'),
             slide = doc.querySelector('.slide'),
             letters = slide.querySelector('h1.myname'),
             line = letters.querySelector('.line'),
             letterList = letters.querySelectorAll('.t'),
             lettersArr = [];
 
-        forEachReverse(letterList, function (index, value) {
+        forEachReverse(letterList, function(index, value) {
             lettersArr.push(value)
         });
 
-        console.log('lettersArr', lettersArr)
 
+        //this._effects['path'].targets = pathHello;
+        anime.timeline()
+            .add({
+                targets: pathHello,
+                strokeDashoffset: [anime.setDashoffset, 0],
+                easing: 'easeInOutSine',
+                duration: 1000,
+                delay: function(el, i) {
+                    return i * 1000
+                },
+                direction: 'forwards',
+                loop: false,
+                complete: function(anim) {
+                    console.log('path completed!')
+                }
+            })
+            .add({
+                targets: line,
+                duration: 200,
+                easing: 'easeInOutCubic',
+                scaleX: [0, 1],
+                complete: function() {
+                    line.style.WebkitTransformOrigin = line.style.transformOrigin = '100% 50%';
+                    anime({
+                        targets: line,
+                        duration: 200,
+                        easing: 'easeInOutCubic',
+                        scaleX: [1, 0],
+                        complete: function() {
+                            anime({
+                                targets: letters,
+                                translateX: 250,
+                                opacity: 1,
+                                direction: 'alternate',
+                                loop: false,
+                                delay: function(el, i, l) {
+                                    return i * 100;
+                                }
+                            });
+                        }
+                    });
+                }
+            });
+    };
 
-        var basicTimeline = anime.timeline();
-        basicTimeline
-        .add({
-            targets: pathHello,
+    // settings for animation
+    /* textAnimation.prototype._effects = {
+        'path': {
+            //targets: pathHello,
             strokeDashoffset: [anime.setDashoffset, 0],
             easing: 'easeInOutSine',
             duration: 1000,
-            delay: function(el, i) { return i * 1000 },
+            delay: function(el, i) {
+                return i * 1000
+            },
             direction: 'forwards',
             loop: false,
-              complete: function(anim) {
-              //$('.container').addClass('completed');
-                  //alert('complete!')
+            complete: function(anim) {
+                console.log('path completed!')
             }
-        })
-        .add({
-          targets: line,
-          //translateX: 250,
-          duration: 200,
-          easing: 'easeInOutCubic',
-          scaleX: [0,1],
-          complete: function() {
-              line.style.WebkitTransformOrigin = line.style.transformOrigin = '100% 50%';
-              anime({
-                  targets: line,
-                  duration: 200,
-                  easing: 'easeInOutCubic',
-                  scaleX: [1,0],
-                  complete: function() {
-                      anime({
-                          targets: letters,
-                          translateX: 250,
-                          opacity: 1,
-                          direction: 'alternate',
-                          loop: false,
-                          delay: function(el, i, l) {
-                              return i * 100;
-                          }
-                      });
-                  }
-              });
-          }
-        });
-    };
+        }
+    } */
 
-
-    var forEachReverse = function (array, callback, scope) {
-        console.log('forEachReverse')
-      for (var i = array.length; i--;) {
-        callback.call(scope, i, array[i]); // passes back stuff we need
-      }
+    var forEachReverse = function(array, callback, scope) {
+        for (var i = array.length; i--;) {
+            callback.call(scope, i, array[i]); // passes back stuff we need
+        }
     };
 
 
