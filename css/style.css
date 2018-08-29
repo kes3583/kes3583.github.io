@@ -36,7 +36,7 @@ html {
   left: 0;
   margin: 0;
   top: 0;
-  animation: loading 2s linear 0.5s forwards; }
+  animation: loading 1s linear 0.5s forwards; }
 
 @keyframes loading {
   from {
@@ -49,13 +49,13 @@ html {
   top: 50%;
   left: 40%;
   transform: scaleX(1);
-  animation: completed 0.5s linear 2.5s forwards; }
+  animation: completed 0.1s linear 1.6s forwards; }
 
 @keyframes completed {
   to {
     transform: scaleX(0); } }
 .loading .load-wrapper {
-  animation: animLoadedHeader 0.5s cubic-bezier(0.7, 0, 0.3, 1) 3s forwards; }
+  animation: animLoadedHeader 0.5s cubic-bezier(0.7, 0, 0.3, 1) 1.7s forwards; }
 
 @keyframes animLoadedHeader {
   to {
@@ -74,15 +74,15 @@ html {
   visibility: visible;
   opacity: 1;
   transition: 0.3s ease;
-  color: #313131;
-  border: 1px solid red; }
+  color: #313131; }
 
 .svg-hello {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 50%; }
+  width: 35%;
+  transform: translate(-50%, -65%); }
   .svg-hello svg {
     fill: none;
     margin-top: -7px;
@@ -105,19 +105,19 @@ html {
     margin: 0 !important;
     color: #0B3EC6;
     transform: translate(-60%);
-    font-size: 500%;
+    font-size: 7vw;
     font-family: Monoton, sans-serif;
-    font-weight: 400;
-    font-style: normal; }
+    font-weight: 400; }
     .slide .myname span {
-      opacity: 1; }
-    .slide .myname div {
+      opacity: 0; }
+    .slide .myname div.line {
       position: absolute;
       width: 100%;
       height: 5px;
       top: 50%;
       background: #0B3EC6;
-      opacity: 1; }
+      transform: scale3d(0, 1, 1);
+      transform-origin: 0% 50%; }
 
 .letter-effect {
   display: -webkit-flex;

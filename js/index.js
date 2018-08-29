@@ -22,7 +22,7 @@
         window.addEventListener('scroll', noscroll);
         container.classList.add('loading');
 
-        //detect the end of animations
+        //detect the end of animations of last element
         var loadWrapper = $('.load-wrapper');
         loadWrapper.on(animationEvent, function(e) {
             //console.log('detecting animationName!', e.originalEvent.animationName)
@@ -35,7 +35,7 @@
                 container.classList.add("loaded");
                 window.removeEventListener('scroll', noscroll);
 
-                //textAnimation();
+                textAnimation();
             }
         });
     }
@@ -98,20 +98,25 @@
             })
             .add({
                 targets: line,
-                duration: 200,
+                duration: 300,
+                delay : 300,
                 easing: 'easeInOutCubic',
+                translateX : 250,
                 scaleX: [0, 1],
                 complete: function() {
-                    line.style.WebkitTransformOrigin = line.style.transformOrigin = '100% 50%';
+                    line.style.WebkitTransformOrigin = line.style.transformOrigin = '200% 50%';
                     anime({
                         targets: line,
                         duration: 200,
                         easing: 'easeInOutCubic',
                         scaleX: [1, 0],
+                        translateX : 250,
                         complete: function() {
+                            //console.log(lettersArr)
                             anime({
-                                targets: letters,
+                                targets: lettersArr,
                                 translateX: 250,
+                                scaleX: [0, 1],
                                 opacity: 1,
                                 direction: 'alternate',
                                 loop: false,
@@ -162,5 +167,6 @@
     // if (!this.classList.contains('active')) {
     //     this.classList.add('active');
     // }
+
 
 })(window, document);
