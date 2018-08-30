@@ -1,0 +1,41 @@
+
+//@import "compass";
+
+// variable
+$font-roboto: Roboto, sans-serif;
+$font-monoton: Monoton, sans-serif;
+$background-color: #f1f1f1;
+$primary-color: #72d0f4;
+$secondary-color: #0B3EC6;
+$tertiary-color: #313131;
+
+//@mixin
+@mixin transform($option) {
+    -webkit-transform: $option;
+    -moz-transform: $option;
+    -ms-transform: $option;
+    transform: $option;
+}
+
+@mixin toBeCenter {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+//%Extend/Inheritance
+%message-shared {
+  border: 1px solid #ccc;
+  padding: 10px;
+  color: #333;
+}
+
+.message {
+  @extend %message-shared;
+}
+
+.success {
+  @extend %message-shared;
+  border-color: green;
+}
