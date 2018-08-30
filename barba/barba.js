@@ -16,6 +16,7 @@ $('document').ready(function(){
            });
 
            Barba.Pjax.getTransition = function() {
+             alert(1)
              return transEffect;
            }
            Barba.Pjax.start();
