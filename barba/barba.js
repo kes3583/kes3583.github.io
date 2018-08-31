@@ -17,7 +17,7 @@ $('document').ready(function(){
            });
 
            Barba.Pjax.getTransition = function() {
-             console.log('nextpage')
+             console.log('nextpage1')
              return transEffect;
            }
            Barba.Pjax.start();
