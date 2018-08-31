@@ -6,7 +6,7 @@ $('document').ready(function(){
                fadeInNewcontent: function(nc) {
                  //console.log(nc); //div.barba-container
                  //nc.hide();
-                 nc.style.display = "block";
+                 nc.classList.add('on');
                  console.log('this',this)
                  var _this = this;
                  $(this.oldContainer).fadeOut(1000).promise().done(() => {
