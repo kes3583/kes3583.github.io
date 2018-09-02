@@ -108,6 +108,7 @@ header {
   visibility: hidden; }
 
 #nav ul li {
+  position: absolute;
   list-style: none; }
 
 #nav a.menu__item {
