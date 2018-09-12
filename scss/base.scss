@@ -4,10 +4,17 @@
 // variable
 $font-roboto: Roboto, sans-serif;
 $font-monoton: Monoton, sans-serif;
-$background-color: #f1f1f1;
+$background-color: #363dc2;
 $primary-color: #72d0f4;
 $secondary-color: #0B3EC6;
 $tertiary-color: #313131;
+
+$--text-color: #fff;
+$--background-color: #363dc2;
+$--background-color-2: #6c06f7;
+$--background-color-3: #202692;
+$--link-color: #03b9f1;
+$--link-hover-color: #fff;
 
 //@mixin
 @mixin transform($option) {
@@ -38,4 +45,11 @@ $tertiary-color: #313131;
 .success {
   @extend %message-shared;
   border-color: green;
+}
+.hidden {
+	position: absolute;
+	overflow: hidden;
+	width: 0;
+	height: 0;
+	pointer-events: none;
 }

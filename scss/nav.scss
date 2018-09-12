@@ -3,8 +3,8 @@
 // Settings
 // ==================================================
 $hamburger-position: 5% !default;
-$hamburger-padding-x: 5px !default;
-$hamburger-padding-y: 5px !default;
+$hamburger-padding-x: 20px !default;
+$hamburger-padding-y: 20px !default;
 $hamburger-layer-width: 30px !default;
 $hamburger-layer-height: 2px !default;
 $hamburger-layer-spacing: 6px !default;
@@ -13,12 +13,15 @@ $hamburger-layer-border-radius: 0 !default;
 $hamburger-hover-opacity: 0.7 !default;
 $hamburger-hover-transition-duration: 0.15s !default;
 $hamburger-hover-transition-timing-function: linear !default;
+$hamburger-layer-color-active: #fff !default;
+
 $--color-text: #8c8c8c;
 $--color-background: #1f1e1e;
 $--color-link: #e5d338;
 $--color-link-hover: #8c8c8c;
 
 // Hamburger
+
 // ==================================================
 
 .hamburger {
@@ -131,17 +134,11 @@ $--color-link-hover: #8c8c8c;
         }
     }
 }
-header{
-    background: $--color-background;
 
-}
+header {
+    display: none;
+    position: fixed;;
 
-#nav {
-
-    position: absolute;
-    display: block;
-    left:0;
-    top: 0;
     width: 100%;
     height: 100%;
     margin: 0 0 0 0;
@@ -149,85 +146,114 @@ header{
     transition: top 0.4s;
     z-index:9;
     opacity: 1;
-}
-#nav h1{
-    display: none;
-    visibility: hidden;
-}
-
-#nav ul {
-
-    li {
-        position: absolute;
-        list-style: none;
-    }
-}
-
-#nav a.menu__item {
-    position: relative;
-	display: flex;
 	flex-direction: column;
 	align-items: center;
-	margin: 1.25em 0;
-    border:1px solid red;
-	text-align: center;
+}
 
 
-    &:last-child{
-        margin-bottom: 0;
+.menu{
+    position: relative;
+	z-index: 10;
+    display: flex;
+	flex-direction: column;
+	align-items: center;
+    margin:5em 0 0 0;
+
+    .menu__item {
+    	position: relative;
+    	display: flex;
+    	flex-direction: column;
+    	align-items: center;
+    	margin: 0.3em 0;
+    	text-align: center;
+
     }
+
+    .menu__item:last-child {
+    	margin-bottom: 0;
+    }
+    .menu__item-name,
+    .menu__item-label {
+    	position: relative;
+    	display: inline-block;
+    }
+
     .menu__item-name {
     	font-family: 'Roboto', serif;
     	font-size: 2.25em;
     	padding: 0 0.25em;
     	color: #fff;
-    	border:1px solid red;
+
+        &::before {
+        	content: '';
+        	position: absolute;
+        	top: calc(50% - 2px);
+        	left: 0;
+        	width: 100%;
+        	height: 4px;
+        	pointer-events: none;
+        	background: #fff;
+        	transform: scale3d(0,1,1);
+        	transform-origin: 100% 50%;
+        	transition: transform 0.5s;
+        	transition-timing-function: cubic-bezier(0.8,0,0.2,1);
+        }
+    }
+    .menu__item-label {
+    	font-size: 0.85em;
+    	margin-top: 0.5em;
+    	letter-spacing: 0.2em;
+    	text-transform: uppercase;
+    	color: $--color-link;
+
+        &::after {
+        	content: '';
+        	position: absolute;
+        	left: 0;
+        	width: 100%;
+        	height: 100%;
+        	background: $--color-background;
+        	transform-origin: 100% 50%;
+        	transition: transform 0.5s;
+        	transition-timing-function: cubic-bezier(0.8,0,0.2,1);
+        }
     }
 
-    .menu__item-name::before{
-        content: '';
-    	position: absolute;
-    	top: 50%;
-    	left: 0;
-    	width: 100%;
-    	height: 2px;
-    	pointer-events: none;
-    	background: $primary-color;
-    	transform: scale3d(0,1,1);
-    	transform-origin: 100% 50%;
-    	transition: transform 0.5s;
-    	transition-timing-function: cubic-bezier(0.8,0,0.2,1);
-    }
 }
 
-#nav .menu__item:hover .menu__item-name::before,
-#nav .menu__item:focus .menu__item-name::before {
+.menu__item:hover .menu__item-name::before,
+.menu__item:focus .menu__item-name::before {
 	transform: scale3d(1,1,1);
 	transform-origin: 0% 50%;
 }
 
-#nav .menu__item-label {
-	font-size: 0.85em;
-	margin-top: 0.5em;
-	letter-spacing: 0.2em;
-	text-transform: uppercase;
-	color: $--color-link;
-}
-
-#nav .menu__item-label::after {
-	content: '';
-	position: absolute;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	background: $--color-background;
-	transform-origin: 100% 50%;
-	transition: transform 0.5s;
-	transition-timing-function: cubic-bezier(0.8,0,0.2,1);
-}
-
-#nav .menu__item:hover .menu__item-label::after,
-#nav .menu__item:focus .menu__item-label::after {
+.menu__item:hover .menu__item-label::after,
+.menu__item:focus .menu__item-label::after {
 	transform: scale3d(0,1,1);
 	transform-origin: 0% 50%;
+}
+
+/* Add Animation - Zoom in the Modal */
+
+.active {
+    .hamburger-inner{
+        &,
+        &::after,
+        &::before {
+
+            background-color: $hamburger-layer-color-active;
+        }
+    }
+}
+
+.active {
+    display: block;
+
+    animation-name: zoom;
+    animation-duration: 0.6s;
+}
+
+@keyframes zoom {
+    from {transform:scale(0)}
+    to {transform:scale(1)}
 }
