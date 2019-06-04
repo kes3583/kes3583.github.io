@@ -68,6 +68,20 @@
                     }
                 });
                 //20190522 부분수정  끝
+                var scrollLock = false;
+                var scrollMem = {left: 0, top: 0};
+                $(window).scroll(function(){
+                  if (scrollLock) {
+                      window.scrollTo(scrollMem.left, scrollMem.top);
+                  } else {
+                      console.log("here we go");
+                      scrollMem = {
+                          lelf: self.pageXOffset || document.documentElement.scrollLeft || document.body.scrollLeft,
+                          top: self.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
+                      };
+                  }
+              });
+
                 //개인정보 팝업
                 $('.btn_apply').click(function(e){
 
@@ -99,11 +113,15 @@
                     	//$("#layerpop_complete, #img_complete_luck_master").show();
                         $("#btn_complete").trigger("click");
                     }
-                    $('html,body').css({'overflow': 'auto', 'overflow-y': 'hidden'});
-                    
+                    $('html,body').css({'overflow': 'auto'});
+
+
+
                     $('.dimed').show();
                     //$('.nodisplay').show();
                     e.preventDefault();
+                  scrollLock = false;
+
                 });
 
                 $('.bg_gray').click(function(e){
