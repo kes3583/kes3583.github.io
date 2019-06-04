@@ -294,7 +294,7 @@ a:active {
   left: 0;
   width: 100%;
   height: 100%;
-  background: var(--background-color); }
+  background: #363dc2; }
 
 .js .loading::after {
   content: '';
@@ -305,8 +305,8 @@ a:active {
   width: 60px;
   height: 60px;
   border-radius: 50%;
-  border: 10px solid var(--background-color-2);
-  border-left-color: var(--text-color);
+  border: 10px solid #6c06f7;
+  border-left-color: #fff;
   animation: loaderAnim 0.8s linear infinite forwards; }
 
 @keyframes loaderAnim {
