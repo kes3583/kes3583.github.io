@@ -113,7 +113,7 @@
                     	//$("#layerpop_complete, #img_complete_luck_master").show();
                         $("#btn_complete").trigger("click");
                     }
-                    $('html,body').css({'overflow': 'auto'});
+                    $('html,body').css({'overflow': 'auto', 'height':'100%'});
 
 
 
@@ -123,9 +123,10 @@
                   scrollLock = false;
 
                 });
-
+              // cancel
                 $('.bg_gray').click(function(e){
                     $('.dimed').hide();
+                    scrollLock = false;
                     $(this).parents('.layerpop').hide();
                     //20190528 레이어팝업 뜰때 터치 풀기
                     if(/iPhone|iPad|iPod/i.test(navigator.userAgent)){
